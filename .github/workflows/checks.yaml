@@ -41,6 +41,7 @@ jobs:
         run: |
           go build -v ./...
   checks:
+    name: "Checks"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
