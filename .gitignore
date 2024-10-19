@@ -1,0 +1,6 @@
+.idea
+aoc
+
+# Cache
+cache/*
+!cache/.gitkeep
