@@ -53,6 +53,14 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
+      - name: "Check go mod tidy"
+        run: |
+          go mod tidy
+          if ! git diff --exit-code go.mod go.sum; then
+            echo "Error: go.mod or go.sum files are not tidy. Please run 'go mod tidy' and push the changes."
+            exit 1
+          fi
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
