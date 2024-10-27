@@ -48,7 +48,7 @@ func (c *runCommand) runE(command *cobra.Command, args []string) error {
 		return err
 	}
 
-	fmt.Println(fmt.Sprintf("Input received %s", string(content)))
+	fmt.Printf("Input received %s", string(content))
 
 	return nil
 }
