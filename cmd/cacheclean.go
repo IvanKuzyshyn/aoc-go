@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/IvanKuzyshyn/aoc-go/data"
 	"github.com/spf13/cobra"
 )
 
@@ -25,9 +24,11 @@ func NewCacheCleanCommand() *cobra.Command {
 }
 
 func (c *cacheCleanCommand) runE(command *cobra.Command, args []string) error {
-	fmt.Println("Executing cache clean command")
+	cache := data.Cache{
+		Dir: "cache",
+	}
 
-	return nil
+	return cache.Clean()
 }
 
 func (c *cacheCleanCommand) bindFlags(cmd *cobra.Command) {

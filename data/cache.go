@@ -2,8 +2,10 @@ package data
 
 import (
 	"fmt"
+	"io/fs"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 type Cache struct {
@@ -30,6 +32,21 @@ func (c *Cache) Read() ([]byte, error) {
 	_, cacheFilePath := c.buildCacheFilePath()
 
 	return os.ReadFile(cacheFilePath)
+}
+
+func (c *Cache) Clean() error {
+	return filepath.Walk(c.Dir, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if path == c.Dir {
+			return nil
+		}
+		if info.Name() == ".gitkeep" {
+			return nil
+		}
+		return os.RemoveAll(path)
+	})
 }
 
 func (c *Cache) buildCacheFilePath() (string, string) {
