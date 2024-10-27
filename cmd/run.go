@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/IvanKuzyshyn/aoc-go/data"
 	"github.com/spf13/cobra"
 )
 
 type runCommand struct {
-	Day   int8
+	Day   int
 	Debug bool
-	Year  int8
+	Year  int
 }
 
 func NewRunCommand() *cobra.Command {
@@ -28,15 +29,34 @@ func NewRunCommand() *cobra.Command {
 }
 
 func (c *runCommand) runE(command *cobra.Command, args []string) error {
-	fmt.Println("Executing run command")
+	var content []byte
+	var err error
+	input := data.Input{Day: c.Day, Year: c.Year}
+	cache := data.Cache{
+		Dir:   "cache",
+		Input: input,
+	}
+	content, err = cache.Read()
+	if err != nil {
+		content, err = input.Load()
+	}
+	if err != nil {
+		return err
+	}
+	err = cache.Write(content)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(fmt.Sprintf("Input received %s", string(content)))
 
 	return nil
 }
 
 func (c *runCommand) bindFlags(cmd *cobra.Command) {
 	cmd.Flags().BoolVar(&c.Debug, "debug", false, "Enable debug")
-	cmd.Flags().Int8VarP(&c.Day, "day", "d", 0, "Advent day number")
-	cmd.Flags().Int8VarP(&c.Year, "year", "y", 0, "Advent year")
+	cmd.Flags().IntVarP(&c.Day, "day", "d", 0, "Advent day number")
+	cmd.Flags().IntVarP(&c.Year, "year", "y", 0, "Advent year")
 
 	err := cmd.MarkFlagRequired("day")
 	if err != nil {

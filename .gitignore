@@ -1,5 +1,10 @@
 .idea
+
+# Binary
 aoc
+
+# Env variables
+.env
 
 # Cache
 cache/*
