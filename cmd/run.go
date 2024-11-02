@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/IvanKuzyshyn/aoc-go/api"
+	"github.com/IvanKuzyshyn/aoc-go/puzzles"
 	"github.com/spf13/cobra"
 )
 
@@ -48,7 +49,13 @@ func (c *runCommand) runE(command *cobra.Command, args []string) error {
 		return err
 	}
 
-	fmt.Printf("Input received %s", string(content))
+	solution := puzzles.Solution{Day: c.Day, Year: c.Year}
+	result, err := solution.Solve(string(content))
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Result received: %s", result)
 
 	return nil
 }
