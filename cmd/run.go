@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/IvanKuzyshyn/aoc-go/data"
+	"github.com/IvanKuzyshyn/aoc-go/api"
 	"github.com/spf13/cobra"
 )
 
@@ -31,8 +31,8 @@ func NewRunCommand() *cobra.Command {
 func (c *runCommand) runE(command *cobra.Command, args []string) error {
 	var content []byte
 	var err error
-	input := data.Input{Day: c.Day, Year: c.Year}
-	cache := data.Cache{
+	input := api.Input{Day: c.Day, Year: c.Year}
+	cache := api.Cache{
 		Dir:   "cache",
 		Input: input,
 	}
