@@ -6,6 +6,7 @@ import (
 
 	"github.com/IvanKuzyshyn/aoc-go/api"
 	"github.com/IvanKuzyshyn/aoc-go/puzzles"
+	"github.com/IvanKuzyshyn/aoc-go/solver"
 	"github.com/spf13/cobra"
 )
 
@@ -49,13 +50,19 @@ func (c *runCommand) runE(command *cobra.Command, args []string) error {
 		return err
 	}
 
-	solution := puzzles.Solution{Day: c.Day, Year: c.Year}
-	result, err := solution.Solve(string(content))
+	reg := puzzles.NewPuzzlesRegistry()
+	slvr, err := reg.GetSolver(c.Year, c.Day)
+	if err != nil {
+		return err
+	}
+	result, err := slvr.Solve(solver.Opts{
+		Input: string(content),
+	})
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("Result received: %s", result)
+	fmt.Printf("Result output received: %s", result.Output)
 
 	return nil
 }

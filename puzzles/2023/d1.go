@@ -1,15 +1,19 @@
-package puzzles
+package y2023
 
 import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"github.com/IvanKuzyshyn/aoc-go/solver"
 )
 
-func SolveD1(input string) (string, error) {
+type Day1Solver struct{}
+
+func (s Day1Solver) Solve(opts solver.Opts) (solver.Result, error) {
 	var totalCalibrationVal int
 
-	for _, row := range strings.Split(input, "\n") {
+	for _, row := range strings.Split(opts.Input, "\n") {
 		if row == "" {
 			continue
 		}
@@ -33,10 +37,12 @@ func SolveD1(input string) (string, error) {
 		}
 		totalInRow, err := strconv.Atoi(firstDigit + lastDigit)
 		if err != nil {
-			return "", err
+			return solver.Result{}, err
 		}
 		totalCalibrationVal += totalInRow
 	}
 
-	return strconv.Itoa(totalCalibrationVal), nil
+	return solver.Result{
+		Output: strconv.Itoa(totalCalibrationVal),
+	}, nil
 }
