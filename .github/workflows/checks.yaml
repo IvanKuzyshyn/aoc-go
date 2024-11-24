@@ -74,3 +74,6 @@ jobs:
         with:
           version: ${{ env.STATICCHECK_VERSION }}
           install-go: false
+
+      - name: "go test"
+        run: "go test ./..."
