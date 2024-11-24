@@ -76,4 +76,4 @@ jobs:
           install-go: false
 
       - name: "go test"
-        run: "go test ./..."
+        run: "go test ./... --race -count=1"

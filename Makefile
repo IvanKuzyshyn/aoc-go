@@ -17,4 +17,4 @@ static-checks:
 
 test:
 	$(info Running tests...)
-	go test ./... --race;
+	go test ./... --race -count=1;
