@@ -14,3 +14,7 @@ lint: static-checks
 static-checks:
 	$(info Running static checks...)
 	staticcheck ./...
+
+test:
+	$(info Running tests...)
+	go test ./... --race -count=1;

@@ -5,13 +5,15 @@ import (
 	"log"
 
 	"github.com/IvanKuzyshyn/aoc-go/data"
+	"github.com/IvanKuzyshyn/aoc-go/puzzles"
+	"github.com/IvanKuzyshyn/aoc-go/solver"
 	"github.com/spf13/cobra"
 )
 
 type runCommand struct {
-	Day   int
+	Day   int16
 	Debug bool
-	Year  int
+	Year  int16
 }
 
 func NewRunCommand() *cobra.Command {
@@ -31,32 +33,39 @@ func NewRunCommand() *cobra.Command {
 func (c *runCommand) runE(command *cobra.Command, args []string) error {
 	var content []byte
 	var err error
-	input := data.Input{Day: c.Day, Year: c.Year}
-	cache := data.Cache{
-		Dir:   "cache",
-		Input: input,
-	}
-	content, err = cache.Read()
+	d := data.NewPuzzleData(c.Day, c.Year)
+	content, err = d.ReadCache()
 	if err != nil {
-		content, err = input.Load()
+		content, err = d.GetInput()
 	}
 	if err != nil {
 		return err
 	}
-	err = cache.Write(content)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("Input received %s", string(content))
+	reg := puzzles.NewPuzzlesRegistry()
+	s, err := reg.GetSolver(c.Year, c.Day)
+	if err != nil {
+		return err
+	}
+	result, err := s.Solve(solver.Opts{
+		Input: string(content),
+	})
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Result output received: %s", result.Output)
 
 	return nil
 }
 
 func (c *runCommand) bindFlags(cmd *cobra.Command) {
 	cmd.Flags().BoolVar(&c.Debug, "debug", false, "Enable debug")
-	cmd.Flags().IntVarP(&c.Day, "day", "d", 0, "Advent day number")
-	cmd.Flags().IntVarP(&c.Year, "year", "y", 0, "Advent year")
+	cmd.Flags().Int16VarP(&c.Day, "day", "d", 0, "Advent day number")
+	cmd.Flags().Int16VarP(&c.Year, "year", "y", 0, "Advent year")
 
 	err := cmd.MarkFlagRequired("day")
 	if err != nil {
