@@ -1,22 +1,21 @@
-package api
+package data
 
 import (
 	"fmt"
 	"io"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 const (
 	originUrl = "https://adventofcode.com"
+	token     = "SESSION_TOKEN"
 )
 
-type Input struct {
-	Day  int
-	Year int
-}
-
-func (i *Input) Load() ([]byte, error) {
+func (i *PuzzleData) GetInput() ([]byte, error) {
 	url := fmt.Sprintf("%s/%d/day/%d/input", originUrl, i.Year, i.Day)
 	token, err := getSessionToken()
 	if err != nil {
@@ -51,4 +50,16 @@ func (i *Input) Load() ([]byte, error) {
 	}
 
 	return io.ReadAll(resp.Body)
+}
+
+func getSessionToken() (string, error) {
+	err := godotenv.Load()
+	if err != nil {
+		return "", err
+	}
+	token := os.Getenv(token)
+	if len(token) == 0 {
+		return "", fmt.Errorf("value of %s is not set or is empty", token)
+	}
+	return token, err
 }

@@ -5,18 +5,18 @@ import (
 )
 
 type Registry struct {
-	solvers map[int]map[int]Solver
+	solvers map[int16]map[int16]Solver
 }
 
 func NewRegistry() *Registry {
 	return &Registry{
-		solvers: make(map[int]map[int]Solver),
+		solvers: make(map[int16]map[int16]Solver),
 	}
 }
 
-func (r *Registry) Register(year, day int, solver Solver) {
+func (r *Registry) Register(year, day int16, solver Solver) {
 	if _, exists := r.solvers[year]; !exists {
-		r.solvers[year] = make(map[int]Solver)
+		r.solvers[year] = make(map[int16]Solver)
 	}
 	if _, exists := r.solvers[year][day]; exists {
 		// It should be fatal as we can't register multiple solvers
@@ -25,7 +25,7 @@ func (r *Registry) Register(year, day int, solver Solver) {
 	r.solvers[year][day] = solver
 }
 
-func (r *Registry) GetSolver(year, day int) (Solver, error) {
+func (r *Registry) GetSolver(year, day int16) (Solver, error) {
 	if days, exists := r.solvers[year]; exists {
 		if solver, exists := days[day]; exists {
 			return solver, nil

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/IvanKuzyshyn/aoc-go/api"
+	"github.com/IvanKuzyshyn/aoc-go/data"
 	"github.com/spf13/cobra"
 )
 
@@ -24,11 +24,9 @@ func NewCacheCleanCommand() *cobra.Command {
 }
 
 func (c *cacheCleanCommand) runE(command *cobra.Command, args []string) error {
-	cache := api.Cache{
-		Dir: "cache",
-	}
+	d := data.NewEmptyData()
 
-	return cache.Clean()
+	return d.CleanCache()
 }
 
 func (c *cacheCleanCommand) bindFlags(cmd *cobra.Command) {

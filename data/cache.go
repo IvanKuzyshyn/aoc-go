@@ -1,4 +1,4 @@
-package api
+package data
 
 import (
 	"fmt"
@@ -8,12 +8,7 @@ import (
 	"path/filepath"
 )
 
-type Cache struct {
-	Dir   string
-	Input Input
-}
-
-func (c *Cache) Write(data []byte) error {
+func (c *PuzzleData) WriteCache(data []byte) error {
 	cacheFolder, cacheFilePath := c.buildCacheFilePath()
 	var err error
 	err = os.MkdirAll(cacheFolder, os.ModePerm)
@@ -28,18 +23,18 @@ func (c *Cache) Write(data []byte) error {
 	return nil
 }
 
-func (c *Cache) Read() ([]byte, error) {
+func (c *PuzzleData) ReadCache() ([]byte, error) {
 	_, cacheFilePath := c.buildCacheFilePath()
 
 	return os.ReadFile(cacheFilePath)
 }
 
-func (c *Cache) Clean() error {
-	return filepath.Walk(c.Dir, func(path string, info fs.FileInfo, err error) error {
+func (c *PuzzleData) CleanCache() error {
+	return filepath.Walk(c.CacheDir, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		if path == c.Dir {
+		if path == c.CacheDir {
 			return nil
 		}
 		if info.Name() == ".gitkeep" {
@@ -49,8 +44,8 @@ func (c *Cache) Clean() error {
 	})
 }
 
-func (c *Cache) buildCacheFilePath() (string, string) {
-	folder := path.Join(c.Dir, fmt.Sprintf("%d", c.Input.Year))
-	fullPath := path.Join(folder, fmt.Sprintf("%d.txt", c.Input.Day))
+func (c *PuzzleData) buildCacheFilePath() (string, string) {
+	folder := path.Join(c.CacheDir, fmt.Sprintf("%d", c.Year))
+	fullPath := path.Join(folder, fmt.Sprintf("%d.txt", c.Day))
 	return folder, fullPath
 }

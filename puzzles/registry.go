@@ -6,8 +6,8 @@ import (
 )
 
 type puzzle struct {
-	Day    int
-	Year   int
+	Day    int16
+	Year   int16
 	Solver solver.Solver
 }
 
