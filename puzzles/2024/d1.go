@@ -84,11 +84,7 @@ func solveSecondPart(opts solver.Opts) (solver.Result, error) {
 	similarityScore.right = right
 
 	for _, v := range similarityScore.right {
-		if _, ok := similarityScore.rightInstancesCount[v]; ok {
-			similarityScore.rightInstancesCount[v]++
-		} else {
-			similarityScore.rightInstancesCount[v] = 1
-		}
+		similarityScore.rightInstancesCount[v]++
 	}
 
 	for _, v := range similarityScore.left {
