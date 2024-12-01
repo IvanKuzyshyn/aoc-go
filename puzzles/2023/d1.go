@@ -11,7 +11,7 @@ import (
 	"github.com/IvanKuzyshyn/aoc-go/solver"
 )
 
-type Day1Solver struct{}
+type Day1Solution struct{}
 
 type calibrator struct {
 	rows  chan string
@@ -63,7 +63,7 @@ func (c *calibrator) calcRowCalibrationVal(row string) {
 	}
 }
 
-func (s Day1Solver) Solve(opts solver.Opts) (solver.Result, error) {
+func (s Day1Solution) Solve(opts solver.Opts) (solver.Result, error) {
 	c := calibrator{
 		rows:  make(chan string),
 		total: 0,
