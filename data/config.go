@@ -1,6 +1,6 @@
 package data
 
-type PuzzleData struct {
+type PuzzleConfig struct {
 	Day      int16
 	Year     int16
 	Part     int8
@@ -11,8 +11,8 @@ const (
 	cacheDir = "cache"
 )
 
-func NewPuzzleData(day, year int16, part int8) PuzzleData {
-	return PuzzleData{
+func NewPuzzleConfig(day, year int16, part int8) PuzzleConfig {
+	return PuzzleConfig{
 		Day:      day,
 		Year:     year,
 		Part:     part,
@@ -20,8 +20,8 @@ func NewPuzzleData(day, year int16, part int8) PuzzleData {
 	}
 }
 
-func NewEmptyData() PuzzleData {
-	return PuzzleData{
+func NewEmptyConfig() PuzzleConfig {
+	return PuzzleConfig{
 		CacheDir: cacheDir,
 	}
 }

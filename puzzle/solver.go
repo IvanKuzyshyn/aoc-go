@@ -1,4 +1,4 @@
-package solver
+package puzzle
 
 type Opts struct {
 	Input string

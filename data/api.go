@@ -15,7 +15,7 @@ const (
 	token     = "SESSION_TOKEN"
 )
 
-func (i *PuzzleData) GetInput() ([]byte, error) {
+func (i *PuzzleConfig) GetInput() ([]byte, error) {
 	url := fmt.Sprintf("%s/%d/day/%d/input", originUrl, i.Year, i.Day)
 	token, err := getSessionToken()
 	if err != nil {

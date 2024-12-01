@@ -3,7 +3,7 @@ package y2023
 import (
 	"testing"
 
-	"github.com/IvanKuzyshyn/aoc-go/solver"
+	"github.com/IvanKuzyshyn/aoc-go/puzzle"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -24,7 +24,7 @@ ninekkbvsfq8seven7321bpdcdh
 
 func TestExpectedResult(t *testing.T) {
 	solution := Day1Solution{}
-	result, err := solution.Solve(solver.Opts{Input: input})
+	result, err := solution.Solve(puzzle.Opts{Input: input})
 
 	assert.Nil(t, err)
 	assert.Equal(t, "591", result.Output)
