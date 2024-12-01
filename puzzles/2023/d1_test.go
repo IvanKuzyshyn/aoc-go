@@ -23,8 +23,8 @@ ninekkbvsfq8seven7321bpdcdh
 )
 
 func TestExpectedResult(t *testing.T) {
-	resolver := Day1Solver{}
-	result, err := resolver.Solve(solver.Opts{Input: input})
+	solution := Day1Solution{}
+	result, err := solution.Solve(solver.Opts{Input: input})
 
 	assert.Nil(t, err)
 	assert.Equal(t, "591", result.Output)
