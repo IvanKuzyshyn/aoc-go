@@ -7,26 +7,26 @@ import (
 	"strings"
 
 	"github.com/IvanKuzyshyn/aoc-go/algorithms"
-	"github.com/IvanKuzyshyn/aoc-go/solver"
+	"github.com/IvanKuzyshyn/aoc-go/puzzle"
 )
 
 type Day1Solution struct{}
 
-var solutions = map[int8]func(opts solver.Opts) (solver.Result, error){
+var solutions = map[int8]func(opts puzzle.Opts) (puzzle.Result, error){
 	1: solveFirstPart,
 	2: solveSecondPart,
 }
 
-func (s Day1Solution) Solve(opts solver.Opts) (solver.Result, error) {
+func (s Day1Solution) Solve(opts puzzle.Opts) (puzzle.Result, error) {
 	solution, ok := solutions[opts.Part]
 	if !ok {
-		return solver.Result{}, fmt.Errorf("solution %d part is not supported", opts.Part)
+		return puzzle.Result{}, fmt.Errorf("solution %d part is not supported", opts.Part)
 	}
 
 	return solution(opts)
 }
 
-func solveFirstPart(opts solver.Opts) (solver.Result, error) {
+func solveFirstPart(opts puzzle.Opts) (puzzle.Result, error) {
 	listDist := struct {
 		left  []int
 		right []int
@@ -39,10 +39,10 @@ func solveFirstPart(opts solver.Opts) (solver.Result, error) {
 
 	left, right, err := extractLists(opts.Input)
 	if err != nil {
-		return solver.Result{}, err
+		return puzzle.Result{}, err
 	}
 	if len(left) != len(right) {
-		return solver.Result{}, fmt.Errorf("lists have different length: %d for the left and %d for the right", len(left), len(right))
+		return puzzle.Result{}, fmt.Errorf("lists have different length: %d for the left and %d for the right", len(left), len(right))
 	}
 
 	listDist.left = algorithms.MergeSort(left)
@@ -55,12 +55,12 @@ func solveFirstPart(opts solver.Opts) (solver.Result, error) {
 		listDist.total += diff(lv, rv)
 	}
 
-	return solver.Result{
+	return puzzle.Result{
 		Output: strconv.Itoa(listDist.total),
 	}, nil
 }
 
-func solveSecondPart(opts solver.Opts) (solver.Result, error) {
+func solveSecondPart(opts puzzle.Opts) (puzzle.Result, error) {
 	similarityScore := struct {
 		left                []int
 		right               []int
@@ -75,10 +75,10 @@ func solveSecondPart(opts solver.Opts) (solver.Result, error) {
 
 	left, right, err := extractLists(opts.Input)
 	if err != nil {
-		return solver.Result{}, err
+		return puzzle.Result{}, err
 	}
 	if len(left) != len(right) {
-		return solver.Result{}, fmt.Errorf("lists have different length: %d for the left and %d for the right", len(left), len(right))
+		return puzzle.Result{}, fmt.Errorf("lists have different length: %d for the left and %d for the right", len(left), len(right))
 	}
 	similarityScore.left = left
 	similarityScore.right = right
@@ -96,7 +96,7 @@ func solveSecondPart(opts solver.Opts) (solver.Result, error) {
 		similarityScore.total += v * mult
 	}
 
-	return solver.Result{
+	return puzzle.Result{
 		Output: strconv.Itoa(similarityScore.total),
 	}, nil
 }

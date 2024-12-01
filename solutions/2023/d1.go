@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"unicode"
 
-	"github.com/IvanKuzyshyn/aoc-go/solver"
+	"github.com/IvanKuzyshyn/aoc-go/puzzle"
 )
 
 type Day1Solution struct{}
@@ -63,7 +63,7 @@ func (c *calibrator) calcRowCalibrationVal(row string) {
 	}
 }
 
-func (s Day1Solution) Solve(opts solver.Opts) (solver.Result, error) {
+func (s Day1Solution) Solve(opts puzzle.Opts) (puzzle.Result, error) {
 	c := calibrator{
 		rows:  make(chan string),
 		total: 0,
@@ -78,7 +78,7 @@ func (s Day1Solution) Solve(opts solver.Opts) (solver.Result, error) {
 	close(c.rows)
 	c.wg.Wait()
 
-	return solver.Result{
+	return puzzle.Result{
 		Output: strconv.Itoa(int(c.total)),
 	}, nil
 }

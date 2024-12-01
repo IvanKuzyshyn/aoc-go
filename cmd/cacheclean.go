@@ -24,9 +24,9 @@ func NewCacheCleanCommand() *cobra.Command {
 }
 
 func (c *cacheCleanCommand) runE(command *cobra.Command, args []string) error {
-	d := data.NewEmptyData()
+	cfg := data.NewEmptyConfig()
 
-	return d.CleanCache()
+	return cfg.CleanCache()
 }
 
 func (c *cacheCleanCommand) bindFlags(cmd *cobra.Command) {

@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/IvanKuzyshyn/aoc-go/data"
-	"github.com/IvanKuzyshyn/aoc-go/puzzles"
-	"github.com/IvanKuzyshyn/aoc-go/solver"
+	"github.com/IvanKuzyshyn/aoc-go/puzzle"
+	"github.com/IvanKuzyshyn/aoc-go/solutions"
 	"github.com/spf13/cobra"
 )
 
@@ -34,12 +34,12 @@ func NewRunCommand() *cobra.Command {
 func (c *runCommand) runE(command *cobra.Command, args []string) error {
 	var content []byte
 	var err error
-	d := data.NewPuzzleData(c.Day, c.Year, c.Part)
-	content, err = d.ReadCache()
+	cfg := data.NewPuzzleConfig(c.Day, c.Year, c.Part)
+	content, err = cfg.ReadCache()
 	if err != nil {
-		content, err = d.GetInput()
+		content, err = cfg.GetInput()
 
-		if err := d.WriteCache(content); err != nil {
+		if err := cfg.WriteCache(content); err != nil {
 			fmt.Println("Error storing data in cache")
 		}
 	}
@@ -50,12 +50,12 @@ func (c *runCommand) runE(command *cobra.Command, args []string) error {
 		return err
 	}
 
-	reg := puzzles.NewPuzzlesRegistry()
-	s, err := reg.GetSolver(c.Year, c.Day)
+	reg := solutions.NewRegistry()
+	s, err := reg.GetSolution(c.Year, c.Day)
 	if err != nil {
 		return err
 	}
-	result, err := s.Solve(solver.Opts{
+	result, err := s.Solve(puzzle.Opts{
 		Input: string(content),
 		Part:  c.Part,
 	})
