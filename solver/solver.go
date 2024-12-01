@@ -2,6 +2,7 @@ package solver
 
 type Opts struct {
 	Input string
+	Part  int8
 }
 
 type Result struct {
